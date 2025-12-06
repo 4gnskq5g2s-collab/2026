@@ -40,7 +40,7 @@ We start by specifying a model of interest in the form of PDE. For the sake of e
 
 $$
 \begin{aligned}
--&\frac{\partial}{\partial \boldsymbol{x}_{1}}\left(k(\boldsymbol{x})\frac{\partial}{\partial \boldsymbol{x}_{1}} u(\boldsymbol{x})\right)-\frac{\partial}{\partial \boldsymbol{x}_{2}}\left(k(\boldsymbol{x})\frac{\partial}{\partial \boldsymbol{x}_{2}} u(\boldsymbol{x})\right) = f(\boldsymbol{x}),\\
+&\frac{\partial}{\partial \boldsymbol{x}_{1}}\left(k(\boldsymbol{x})\frac{\partial}{\partial \boldsymbol{x}_{1}} u(\boldsymbol{x})\right)+\frac{\partial}{\partial \boldsymbol{x}_{2}}\left(k(\boldsymbol{x})\frac{\partial}{\partial \boldsymbol{x}_{2}} u(\boldsymbol{x})\right) = f(\boldsymbol{x}),\\
 &\boldsymbol{x}\in\Gamma=(0, 1)^2,\,\left.u(\boldsymbol{x})\right|_{\boldsymbol{x}\in\partial\Gamma} = 0.
 \end{aligned}
 $$
@@ -84,8 +84,10 @@ Sampling operator $\mathcal{S}\_{N}:\mathcal{C}\_{[0, 1]}\rightarrow \mathbb{R}^
 Interpolation operator $\mathcal{I}\_{N}:\mathbb{R}^{N}\rightarrow \mathcal{C}\_{[0, 1]}$ performs an inverse operation: from a set of samples $f(x\_i)$ it reconstructs function $\widetilde{f}$ by linear interpolation
 
 $$
-\widetilde{f}(x) = \frac{f(x_{i}) (x_{i+1} - x) + f(x_{i+1}) (x - x_{i})}{x_{i+1} - x_{i}},\, x \in[x_{i}, x_{i+1}].
+\widetilde{f}(x) = \frac{f(x_{i}) (x_{i+1} - x) + f(x_{i+1}) (x - x_{i})}{x_{i+1} - x_{i}},
 $$
+
+where $x \in[x\_{i}, x\_{i+1}]$.
 
 In general $f(x) \neq \mathcal{I}\_{N}\left(\mathcal{S}\_{N}(f)\right)(x)$ but as $N$ grows, composition $\mathcal{I}\_{N}\mathcal{S}_{N}$ becomes closer to identity in the standard $L_2$ norm: $\lim\limits\_{k\rightarrow\infty}\left\|f - \mathcal{I}\_{k}\mathcal{S}\_{k} f\right\|\_2 = 0$.
 
@@ -234,7 +236,7 @@ For Burgers equation neural networks were trained to predict $u(x, 0.3)$ from in
 The second dataset is based on stationary diffusion equation
 
 $$
--\frac{d}{dx}\left(k(x) \frac{d \phi(x)}{dx}\right) = 0,\,\phi(0) = \phi(1) = 0,
+-\frac{d}{dx}\left(k(x) \frac{d \phi(x)}{dx}\right) = 1,\,\phi(0) = \phi(1) = 0,
 $$
 
 with $k(x)$ sampled from Gaussian random field with transformation that ensures: (i) $k(x) > 0$, (ii) large spatial variability.
